@@ -52,6 +52,8 @@ import com.raytheon.viz.ui.UiUtil;
  * Mar 21, 2013       1638  mschenke    Changed map scales not tied to d2d
  * Oct 10, 2013       2104  mschenke    Switched to use MapScalesManager
  * Jun 23, 2016             mjames      Use FIVE and ZERO pane widths
+ * Nov 21, 2018				jared@chswx Re-enable operational pane configurations
+ * 
  * 
  * </pre>
  * 
@@ -68,7 +70,7 @@ public class D2D5Pane implements IPerspectiveFactory {
 
     private static final float FIVE_PANE_WIDTH = 0.1f;
 
-    private static final float ZERO_PANE_WIDTH = 0.0f;
+    private static final float THREE_PANE_WIDTH = 0.4f;
 
     /*
      * (non-Javadoc)
@@ -94,32 +96,31 @@ public class D2D5Pane implements IPerspectiveFactory {
             }
         }
 
-        int numViews = ChangeD2DLayoutAction.getViewCount() > 0 ? 0
-                : 4;
+        int numViews = ChangeD2DLayoutAction.getViewCount() == 2 ? 2
+                : baseViewsToAdd.size();
 
         String lastAdded = null;
 
         Collections.sort(baseViewsToAdd);
 
-        if (numViews > 0) {
-	        for (int i = 0; i < baseViewsToAdd.size(); ++i) {
-	            String baseView = baseViewsToAdd.get(i);
-	            if (baseViewsToAdd.contains(baseView)) {
-	                if (lastAdded == null) {
-	                    layout.addStandaloneView(
-	                            baseView,
-	                            false,
-	                            IPageLayout.LEFT,
-	                            FIVE_PANE_WIDTH, editorArea);
-	                } else {
-	                    layout.addStandaloneView(baseView, false,
-	                            IPageLayout.BOTTOM, (i >= numViews) ? 1.0f
-	                                    : 1.0f / (numViews - i + 1), lastAdded);
-	                }
-	                lastAdded = baseView;
-	                addedViews.add(lastAdded);
-	            }
-	        }
+        for (int i = 0; i < baseViewsToAdd.size(); ++i) {
+            String baseView = baseViewsToAdd.get(i);
+            if (baseViewsToAdd.contains(baseView)) {
+                if (lastAdded == null) {
+                    layout.addStandaloneView(
+                            baseView,
+                            false,
+                            IPageLayout.LEFT,
+                            ChangeD2DLayoutAction.getViewCount() == 2 ? THREE_PANE_WIDTH
+                                    : FIVE_PANE_WIDTH, editorArea);
+                } else {
+                    layout.addStandaloneView(baseView, false,
+                            IPageLayout.BOTTOM, (i >= numViews) ? 1.0f
+                                    : 1.0f / (numViews - i + 1), lastAdded);
+                }
+                lastAdded = baseView;
+                addedViews.add(lastAdded);
+            }
         }
 
         addedViews.addAll(baseViewsToAdd);

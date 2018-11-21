@@ -45,7 +45,7 @@
       </vmArgsWin>
    </launcherArgs>
 
-   <windowImages i16="/com.raytheon.viz.product.awips/icons/cave_16x16.png" i32="/com.raytheon.viz.product.awips/icons/cave_32x32.png" i48="/com.raytheon.viz.product.awips/icons/cave_48x48.png" i64="/com.raytheon.viz.product.awips/icons/cave_64x64.png" i128="/com.raytheon.viz.product.awips/icons/cave_128x128.png"/>
+   <windowImages i16="/com.raytheon.viz.product.awips/icons/cave.png" i32="/com.raytheon.viz.product.awips/icons/cave.png" i48="/com.raytheon.viz.product.awips/icons/cave.png" i64="/com.raytheon.viz.product.awips/icons/cave.png" i128="/com.raytheon.viz.product.awips/icons/cave.png" i256="/com.raytheon.viz.product.awips/icons/cave.png"/>
 
    <splash
       location="com.raytheon.viz.ui.personalities.awips"
@@ -58,6 +58,7 @@
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="true">jdk1.7.0</windows>
