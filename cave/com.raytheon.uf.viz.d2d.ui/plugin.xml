@@ -89,6 +89,11 @@
                   style="push">
             </command>
              </menu>
+             <command
+                   commandId="com.raytheon.viz.ui.showHistoryList"
+                   label="History List..."
+                   style="push">
+             </command>
              <menu
                    id="import"
                    label="Import">
@@ -643,7 +648,7 @@
          </toolbar>
          <toolbar
                id="applications">
-            <command
+            <!-- <command
                   commandId="com.raytheon.viz.warngen.gui.WarngenAction"
                   label="WarnGen"
                   mode="FORCE_TEXT">
@@ -659,7 +664,7 @@
                      </test>
                   </and>
                </visibleWhen>
-            </command>
+            </command> -->
                	<command
                   commandId="com.raytheon.uf.viz.d2d.nsharp.dialog"
                   icon="icons/nsharp.png"
