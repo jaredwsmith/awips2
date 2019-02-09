@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -64,6 +64,7 @@ import com.raytheon.viz.grid.GridExtensionManager;
  * Mar 03, 2016  5439     bsteffen  Allow grid derived parameters from edex
  * Aug 15, 2017  6332     bsteffen  Move radar specific logic to extension
  * Aug 23, 2017  6125     bsteffen  Split common updating code to GridInventoryUpdater.
+ * Nov 30, 2018  7673     bsteffen  Prevent full queue from blocking.
  * 
  * </pre>
  * 
@@ -121,8 +122,7 @@ public class GridUpdater extends GridInventoryUpdater {
 
     private final Map<GridMapKey, Set<UpdateValue>> updateMap = new HashMap<>();
 
-    private final BlockingQueue<String> uriUpdateQueue = new ArrayBlockingQueue<>(
-            512);
+    private final BlockingQueue<String> uriUpdateQueue = new LinkedBlockingQueue<>();
 
     private final Job sendDerivedAlerts = new Job(
             "Sending Derived Grid Alerts") {
@@ -203,31 +203,31 @@ public class GridUpdater extends GridInventoryUpdater {
              * real state of the record here and it is left to the receiver of
              * updates to figure it out.
              */
-            GridRecord schrödingersRecord = new GridRecord();
+            GridRecord schrodingersRecord = new GridRecord();
             DataTime time = record.getDataTime();
-            schrödingersRecord.setDataTime(new DataTime(time.getRefTime(),
+            schrodingersRecord.setDataTime(new DataTime(time.getRefTime(),
                     time.getFcstTime() - value.timeOffset));
-            schrödingersRecord.setDatasetId(value.node.getModelName());
+            schrodingersRecord.setDatasetId(value.node.getModelName());
 
             Parameter param = new Parameter(
                     value.node.getDesc().getAbbreviation(),
                     value.node.getDesc().getName(),
                     value.node.getDesc().getUnit());
-            schrödingersRecord.setParameter(param);
-            schrödingersRecord.setLevel(value.node.getLevel());
+            schrodingersRecord.setParameter(param);
+            schrodingersRecord.setLevel(value.node.getLevel());
             if (value.node instanceof GatherLevelNode) {
-                schrödingersRecord.setEnsembleId(null);
+                schrodingersRecord.setEnsembleId(null);
             } else {
-                schrödingersRecord.setEnsembleId(record.getEnsembleId());
+                schrodingersRecord.setEnsembleId(record.getEnsembleId());
             }
-            schrödingersRecord.setSecondaryId(record.getSecondaryId());
-            schrödingersRecord.setLocation(record.getLocation());
+            schrodingersRecord.setSecondaryId(record.getSecondaryId());
+            schrodingersRecord.setLocation(record.getLocation());
             try {
-                uriUpdateQueue.put(schrödingersRecord.getDataURI());
+                uriUpdateQueue.put(schrodingersRecord.getDataURI());
             } catch (InterruptedException e) {
                 statusHandler.handle(Priority.PROBLEM,
                         "Failed to send derived update for "
-                                + schrödingersRecord.getDataURI(),
+                                + schrodingersRecord.getDataURI(),
                         e);
             }
         }

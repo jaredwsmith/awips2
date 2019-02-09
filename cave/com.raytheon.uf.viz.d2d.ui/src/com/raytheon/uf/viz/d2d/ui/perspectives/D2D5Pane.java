@@ -68,7 +68,7 @@ public class D2D5Pane implements IPerspectiveFactory {
     private static final String BASE_VIEW_ID_PREFIX = SideView.ID
             + UiUtil.SECONDARY_ID_SEPARATOR + "sideView";
 
-    private static final float FIVE_PANE_WIDTH = 0.1f;
+    private static final float FIVE_PANE_WIDTH = 0.2f;
 
     private static final float THREE_PANE_WIDTH = 0.4f;
 

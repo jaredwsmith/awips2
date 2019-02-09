@@ -33,7 +33,7 @@
                                         <constraint constraintType="EQUALS" constraintValue="${modelName}"/>
                                     </mapping>
                                     <mapping key="info.parameter.abbreviation">
-                                        <constraint constraintType="EQUALS" constraintValue="SWELL"/>
+                                        <constraint constraintType="EQUALS" constraintValue="swl-wav-ht"/>
                                     </mapping>
                                     <mapping key="info.level.leveltwovalue">
                                         <constraint constraintType="EQUALS" constraintValue="-999999.0"/>
@@ -69,7 +69,7 @@
                                         <constraint constraintType="EQUALS" constraintValue="SFC"/>
                                     </mapping>
                                     <mapping key="info.parameter.abbreviation">
-                                        <constraint constraintType="EQUALS" constraintValue="SWdir"/>
+                                        <constraint constraintType="EQUALS" constraintValue="swl-wav-dir"/>
                                     </mapping>
                                     <mapping key="info.datasetId">
                                         <constraint constraintType="EQUALS" constraintValue="${modelName}"/>
